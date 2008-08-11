@@ -1,0 +1,50 @@
+libAPH.so is simple linux linker hack that allows store auteria configuration files, logs, etc... in user home directory
+As hack it doesn't actually do sane things by definition, so things may break, but "It works for me" TM.
+You have been warned!
+It still wont allow you make auteria directory readonly.
+
+It requires libpcre (http://www.pcre.org/)
+
+To use it just type:
+
+$ git clone git://github.com/piotrrak/auteria-path-hack.git
+$ cd auteria-path-hack/
+$ make
+$ cp libAPH.so /your/path/to/auteria/
+$ mkdir "~/.auteria/"
+
+To run game you want to do something like:
+
+$ cd /your/path/to/auteria/
+$ LD_PRELOAD=./libAPH.so ./auteria.bin
+
+Files that will be stored in your auteria home dir (~/.auteria/):
+
+`game/client/config.cs' as `config.cs'
+`game/client/prefs.cs' as `prefs.cs'
+`console.log'
+`log/YourCharName/chat.log` as `YourCharName@chat.log'
+`log/YourCharName/questlog.cs` as `YourCharName@questlog.cs'
+`log/YourCharName/*.qlog` as `YourCharName@*.qlog'
+
+also screenshots_*.{png, jpg} should be created there
+
+Note:
+That those files won't be moved automagicly, so you have to do it manually!
+
+Example:
+if you wont
+$ cp /your/path/to/auteria/log/_name_/chat.log ~/.auteria/_name_@chat.log
+
+in ~/.auteria/ will be created plain new empty chat.log
+
+Caveat 1: This seems to have some problems with questlog.cs and *.qlog, I recommend to move them.
+Caveat 2: Game might be running slower, i dont see much difference on machines i have tested.
+Caveat 3: It is not deeply tested.
+
+You are also able override default directory by setting LIBABH_CONFIG_LOCATION environment variable.
+
+For more informations bug me, or refer to sources.
+
+Have fun!
+
